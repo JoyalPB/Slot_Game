@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Symbol_Seven
   m_EditorClassIdentifier: Assembly-CSharp::SymbolData
   symbolName: Seven
-  symbolSprite: {fileID: 0}
-  payoutMultiplier: 25
+  symbolSprite: {fileID: 2193077994593488821, guid: cddc4c11a8c56154aa43ecb19a955dcb, type: 3}
+  payoutMultiplier: 60
   weight: 10

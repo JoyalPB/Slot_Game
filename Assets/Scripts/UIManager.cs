@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private int[] betAmounts = { 10, 50, 100 };
 
     [Header("Win Message")]
+    [SerializeField] private GameObject winBoard;
     [SerializeField] private TMP_Text winText;
     [SerializeField] private float winMessageTime = 2f;
 
@@ -64,7 +65,7 @@ public class UIManager : MonoBehaviour
 
     private void HandleSpinStateChanged(bool isSpinning)
     {
-        if (isSpinning) winText.gameObject.SetActive(false);
+        if (isSpinning) winBoard.SetActive(false);
         RefreshBetButtons();
     }
 
@@ -83,7 +84,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    /// <summary>Bet button works only if NOT spinning and player can afford it.</summary>
+    /// Bet button works only if NOT spinning and player can afford it.</summary>
     private void RefreshBetButtons()
     {
         for (int i = 0; i < betButtons.Length; i++)
@@ -95,10 +96,10 @@ public class UIManager : MonoBehaviour
 
     private IEnumerator ShowWinMessage(int winAmount)
     {
-        winText.text = "WIN! +" + winAmount;
-        winText.gameObject.SetActive(true);
+        winText.text = "WIN!";
+        winBoard.SetActive(true);                  // Show the board (and WinText inside)
         yield return new WaitForSeconds(winMessageTime);
-        winText.gameObject.SetActive(false);
+        winBoard.SetActive(false);
     }
 
     private void RestartGame()
