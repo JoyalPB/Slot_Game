@@ -144,12 +144,12 @@ TextureImporter:
       name: Yes_No_Btn_0
       rect:
         serializedVersion: 2
-        x: 69
-        y: 464
-        width: 373
-        height: 144
+        x: 70
+        y: 465
+        width: 371
+        height: 142
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -166,12 +166,12 @@ TextureImporter:
       name: Yes_No_Btn_1
       rect:
         serializedVersion: 2
-        x: 547
-        y: 464
-        width: 373
-        height: 144
+        x: 548
+        y: 465
+        width: 371
+        height: 142
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -188,12 +188,12 @@ TextureImporter:
       name: Yes_No_Btn_2
       rect:
         serializedVersion: 2
-        x: 69
-        y: 273
-        width: 373
-        height: 144
+        x: 70
+        y: 274
+        width: 371
+        height: 142
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -210,12 +210,12 @@ TextureImporter:
       name: Yes_No_Btn_3
       rect:
         serializedVersion: 2
-        x: 547
-        y: 273
-        width: 373
-        height: 144
+        x: 548
+        y: 274
+        width: 371
+        height: 142
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -232,12 +232,12 @@ TextureImporter:
       name: Yes_No_Btn_4
       rect:
         serializedVersion: 2
-        x: 69
-        y: 82
-        width: 373
-        height: 144
+        x: 70
+        y: 83
+        width: 371
+        height: 142
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -254,12 +254,12 @@ TextureImporter:
       name: Yes_No_Btn_5
       rect:
         serializedVersion: 2
-        x: 547
-        y: 82
-        width: 373
-        height: 144
+        x: 548
+        y: 83
+        width: 371
+        height: 142
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -276,7 +276,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 70eab8b9ba5a7974f93402e8049337c0
     internalID: 0
     vertices: []
     indices: 
@@ -284,7 +284,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       Yes_No_Btn_0: 5739530818460350163
       Yes_No_Btn_1: -6555535889777328244
