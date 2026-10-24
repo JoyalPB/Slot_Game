@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     [Header("Game References")]
     [SerializeField] private SlotMachine slotMachine;
     [SerializeField] private PayoutManager payoutManager;
+    [SerializeField] private PartyPopper partyPopper;
 
     [Header("Coin Display")]
     [SerializeField] private TMP_Text coinText;
@@ -86,6 +87,7 @@ public class UIManager : MonoBehaviour
         {
             StopAllCoroutines();
             StartCoroutine(ShowWinMessage(winAmount));
+            partyPopper.Play();
         }
 
         // Cannot afford even the smallest bet? Game over.
