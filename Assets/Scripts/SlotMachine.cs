@@ -12,7 +12,7 @@ public class SlotMachine : MonoBehaviour
     [SerializeField] private Reel[] reels;               // Reel_1, Reel_2, Reel_3
     [SerializeField] private SymbolData[] symbols;       // The 4 symbol data files
     [SerializeField] private PayoutManager payoutManager;
-    [SerializeField] private AudioManager audioManager;
+    
 
     [Header("Timing")]
     [SerializeField] private float firstReelSpinTime = 1.5f;
@@ -40,25 +40,6 @@ public class SlotMachine : MonoBehaviour
     private void Awake()
     {
         currentBet = defaultBet;
-    }
-
-    private void Start()
-    {
-        // Play a click every time a reel stops (subscribe once)
-        if (audioManager == null) return;
-        foreach (Reel reel in reels)
-        {
-            reel.OnReelStopped += audioManager.PlayReelStop;
-        }
-    }
-
-    private void OnDestroy()
-    {
-        if (audioManager == null) return;
-        foreach (Reel reel in reels)
-        {
-            if (reel != null) reel.OnReelStopped -= audioManager.PlayReelStop;
-        }
     }
 
     /// <summary>Called by Bet buttons (OnClick). Only chooses the bet. Does NOT spin.</summary>

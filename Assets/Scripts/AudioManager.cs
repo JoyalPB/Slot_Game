@@ -12,12 +12,11 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource ambienceSource;  // Quiet background sound
 
     [Header("Clips")]
-    [SerializeField] private AudioClip leverClip;
     [SerializeField] private AudioClip spinLoopClip;
-    [SerializeField] private AudioClip reelStopClip;
     [SerializeField] private AudioClip winClip;
     [SerializeField] private AudioClip gameOverClip;
     [SerializeField] private AudioClip ambienceClip;
+    [SerializeField] private AudioClip buttonClickClip;
 
     private void Awake()
     {
@@ -46,10 +45,9 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlayLever() { Play(leverClip); }
-    public void PlayReelStop() { Play(reelStopClip); }
     public void PlayWin() { Play(winClip); }
     public void PlayGameOver() { Play(gameOverClip); }
+    public void PlayButtonClick() { Play(buttonClickClip); }
 
     public void StartSpinLoop()
     {

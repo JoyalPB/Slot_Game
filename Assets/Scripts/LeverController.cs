@@ -56,7 +56,6 @@ public class LeverController : MonoBehaviour
         if (slotMachine.TrySpinWithCurrentBet())
         {
             ShowLeverDown();
-            if (audioManager != null) audioManager.PlayLever();
 
             yield return new WaitForSeconds(pulledTime);
             ShowLeverUp();

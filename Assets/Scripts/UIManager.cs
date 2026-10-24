@@ -51,6 +51,12 @@ public class UIManager : MonoBehaviour
         restartButton.onClick.AddListener(RestartGame);
         exitButton.onClick.AddListener(ExitGame);
 
+        // Play a click on every bet button, the exit button and the restart button
+        foreach (Button button in betButtons)
+            button.onClick.AddListener(() => audioManager.PlayButtonClick());
+        exitButton.onClick.AddListener(() => audioManager.PlayButtonClick());
+        restartButton.onClick.AddListener(() => audioManager.PlayButtonClick());
+
         // Show starting state
         UpdateCoinText(payoutManager.Coins);
         HandleBetChanged(slotMachine.CurrentBet);
