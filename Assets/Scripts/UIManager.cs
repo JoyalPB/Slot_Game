@@ -122,7 +122,7 @@ public class UIManager : MonoBehaviour
 
     private IEnumerator ShowWinMessage(int winAmount)
     {
-        winText.text = "WIN!\n+" + winAmount;
+        winText.text = "WIN!";
         winBoard.SetActive(true);
 
         // Little pop: grow from small to normal size
