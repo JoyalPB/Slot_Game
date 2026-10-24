@@ -3,8 +3,8 @@ using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// Takes a bet, picks random symbols (weighted RNG),
-/// spins the reels, checks for a win, and pays the player.
+/// The boss. Holds the chosen bet, picks random symbols (weighted RNG),
+/// spins the reels when the lever is pulled, checks for a win, and pays the player.
 /// </summary>
 public class SlotMachine : MonoBehaviour
 {
@@ -17,20 +17,51 @@ public class SlotMachine : MonoBehaviour
     [SerializeField] private float firstReelSpinTime = 1.5f;
     [SerializeField] private float extraTimePerReel = 0.7f;   // Each reel stops later than the last
 
+    [Header("Bet")]
+    [SerializeField] private int defaultBet = 10;             // Smallest bet. Used at start and as fallback.
+
     public bool IsSpinning { get; private set; }
 
-    /// Fires when spin starts (true) or ends (false). UI uses this to lock buttons.
+    /// <summary>The bet the lever will use.</summary>
+    public int CurrentBet => currentBet;
+
+    /// <summary>Fires when spin starts (true) or ends (false). UI uses this to lock buttons.</summary>
     public event Action<bool> OnSpinStateChanged;
 
-    /// Fires when spin ends. Gives: did win, win amount, winning symbol (null if lost).
+    /// <summary>Fires when spin ends. Gives: did win, win amount, winning symbol (null if lost).</summary>
     public event Action<bool, int, SymbolData> OnSpinFinished;
 
-    /// Called by Bet buttons and the lever.
-    public void Spin(int bet)
+    /// <summary>Fires when the chosen bet changes. UI uses this to highlight the button.</summary>
+    public event Action<int> OnBetChanged;
+
+    private int currentBet;
+
+    private void Awake()
     {
-        if (IsSpinning) return;                       // No double-click bug
-        if (!payoutManager.PlaceBet(bet)) return;     // Not enough coins
+        currentBet = defaultBet;
+    }
+
+    /// <summary>Called by Bet buttons (OnClick). Only chooses the bet. Does NOT spin.</summary>
+    public void SetBet(int bet)
+    {
+        if (IsSpinning || !payoutManager.CanAfford(bet)) return;
+        currentBet = bet;
+        OnBetChanged?.Invoke(currentBet);
+    }
+
+    /// <summary>Called by the lever. Spins using the chosen bet. Returns true if spin really started.</summary>
+    public bool TrySpinWithCurrentBet()
+    {
+        return TrySpin(currentBet);
+    }
+
+    private bool TrySpin(int bet)
+    {
+        if (IsSpinning) return false;                    // No double-click bug
+        if (!payoutManager.PlaceBet(bet)) return false;  // Not enough coins
+
         StartCoroutine(SpinRoutine(bet));
+        return true;
     }
 
     private IEnumerator SpinRoutine(int bet)
@@ -70,6 +101,13 @@ public class SlotMachine : MonoBehaviour
 
         Debug.Log(isWin ? "WIN! " + results[0].symbolName + " pays " + winAmount : "No win");
 
+        // 5) If player can no longer afford the chosen bet, drop back to the smallest bet
+        if (!payoutManager.CanAfford(currentBet))
+        {
+            currentBet = defaultBet;
+            OnBetChanged?.Invoke(currentBet);
+        }
+
         IsSpinning = false;
         OnSpinStateChanged?.Invoke(false);
         OnSpinFinished?.Invoke(isWin, winAmount, isWin ? results[0] : null);
@@ -96,7 +134,7 @@ public class SlotMachine : MonoBehaviour
             roll -= symbol.weight;
         }
 
-        return symbols[0];  
+        return symbols[0];   // Should never happen, but keeps compiler happy
     }
 
     private bool AllSame(SymbolData[] results)

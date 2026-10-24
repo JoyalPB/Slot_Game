@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Shows coins, locks buttons during spin, shows win message and game over popup.
+/// Shows coins, locks buttons during spin, highlights the chosen bet,
+/// shows the win board and the game over popup.
 /// Only deals with the screen. No game rules here.
 /// </summary>
 public class UIManager : MonoBehaviour
@@ -19,9 +20,11 @@ public class UIManager : MonoBehaviour
     [Header("Bet Buttons (same order as bet amounts)")]
     [SerializeField] private Button[] betButtons;
     [SerializeField] private int[] betAmounts = { 10, 50, 100 };
+    [SerializeField] private Color selectedColor = Color.yellow;   // Color of the chosen bet
+    [SerializeField] private Color normalColor = Color.white;
 
     [Header("Win Message")]
-    [SerializeField] private GameObject winBoard;
+    [SerializeField] private GameObject winBoard;    // The board that holds WinText
     [SerializeField] private TMP_Text winText;
     [SerializeField] private float winMessageTime = 2f;
 
@@ -38,13 +41,14 @@ public class UIManager : MonoBehaviour
         payoutManager.OnCoinsChanged += UpdateCoinText;
         slotMachine.OnSpinStateChanged += HandleSpinStateChanged;
         slotMachine.OnSpinFinished += HandleSpinFinished;
+        slotMachine.OnBetChanged += HandleBetChanged;
 
         restartButton.onClick.AddListener(RestartGame);
         exitButton.onClick.AddListener(ExitGame);
 
         // Show starting state
         UpdateCoinText(payoutManager.Coins);
-        RefreshBetButtons();
+        HandleBetChanged(slotMachine.CurrentBet);
     }
 
     private void OnDestroy()
@@ -55,17 +59,24 @@ public class UIManager : MonoBehaviour
         {
             slotMachine.OnSpinStateChanged -= HandleSpinStateChanged;
             slotMachine.OnSpinFinished -= HandleSpinFinished;
+            slotMachine.OnBetChanged -= HandleBetChanged;
         }
     }
 
     private void UpdateCoinText(int coins)
     {
         coinText.text = coins.ToString();
+        RefreshBetButtons();   // Coins changed, so some bets may now be too expensive
     }
 
     private void HandleSpinStateChanged(bool isSpinning)
     {
-        if (isSpinning) winBoard.SetActive(false);
+        if (isSpinning)
+        {
+            StopAllCoroutines();
+            winBoard.transform.localScale = Vector3.one;   // Reset in case pop was cut short
+            winBoard.SetActive(false);
+        }
         RefreshBetButtons();
     }
 
@@ -84,7 +95,20 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    /// Bet button works only if NOT spinning and player can afford it.</summary>
+    /// <summary>Colors the chosen bet button so the player sees what the lever will use.</summary>
+    private void HandleBetChanged(int bet)
+    {
+        for (int i = 0; i < betButtons.Length; i++)
+        {
+            Image img = betButtons[i].GetComponent<Image>();
+            if (img != null)
+            {
+                img.color = (betAmounts[i] == bet) ? selectedColor : normalColor;
+            }
+        }
+    }
+
+    /// <summary>Bet button works only if NOT spinning and player can afford it.</summary>
     private void RefreshBetButtons()
     {
         for (int i = 0; i < betButtons.Length; i++)
@@ -96,8 +120,20 @@ public class UIManager : MonoBehaviour
 
     private IEnumerator ShowWinMessage(int winAmount)
     {
-        winText.text = "WIN!";
-        winBoard.SetActive(true);                  // Show the board (and WinText inside)
+        winText.text = "WIN!\n+" + winAmount;
+        winBoard.SetActive(true);
+
+        // Little pop: grow from small to normal size
+        Transform board = winBoard.transform;
+        float t = 0f;
+        while (t < 0.25f)
+        {
+            t += Time.deltaTime;
+            board.localScale = Vector3.one * Mathf.Lerp(0.5f, 1f, t / 0.25f);
+            yield return null;
+        }
+        board.localScale = Vector3.one;
+
         yield return new WaitForSeconds(winMessageTime);
         winBoard.SetActive(false);
     }
@@ -111,7 +147,7 @@ public class UIManager : MonoBehaviour
 
     private void ExitGame()
     {
-        // Application.Quit does nothing in WebGL or the editor, so stop Play mode in editor
+        // Application.Quit does nothing in WebGL, so stop Play mode in editor
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
