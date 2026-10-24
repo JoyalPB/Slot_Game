@@ -14,7 +14,7 @@ public class PayoutManager : MonoBehaviour
     /// Fires every time coins change. UI listens to this.
     public event Action<int> OnCoinsChanged;
 
-    private void Start()
+    private void Awake()
     {
         ResetCoins();
     }
