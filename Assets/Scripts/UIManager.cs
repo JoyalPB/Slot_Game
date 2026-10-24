@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 /// <summary>
 /// Shows coins, locks buttons during spin, highlights the chosen bet,
-/// shows the win board and the game over popup.
+/// shows the win board and game over popup, and triggers win effects and sounds.
 /// Only deals with the screen. No game rules here.
 /// </summary>
 public class UIManager : MonoBehaviour
@@ -13,7 +13,11 @@ public class UIManager : MonoBehaviour
     [Header("Game References")]
     [SerializeField] private SlotMachine slotMachine;
     [SerializeField] private PayoutManager payoutManager;
+
+    [Header("Effects and Sound")]
+    [SerializeField] private AudioManager audioManager;
     [SerializeField] private PartyPopper partyPopper;
+    
 
     [Header("Coin Display")]
     [SerializeField] private TMP_Text coinText;
@@ -74,10 +78,17 @@ public class UIManager : MonoBehaviour
     {
         if (isSpinning)
         {
+            if (audioManager != null) audioManager.StartSpinLoop();
+
             StopAllCoroutines();
             winBoard.transform.localScale = Vector3.one;   // Reset in case pop was cut short
             winBoard.SetActive(false);
         }
+        else
+        {
+            if (audioManager != null) audioManager.StopSpinLoop();
+        }
+
         RefreshBetButtons();
     }
 
@@ -86,14 +97,17 @@ public class UIManager : MonoBehaviour
         if (isWin)
         {
             StopAllCoroutines();
-            StartCoroutine(ShowWinMessage(winAmount));
-            partyPopper.Play();
+            StartCoroutine(ShowWinMessage());
+
+            if (audioManager != null) audioManager.PlayWin();
+            if (partyPopper != null) partyPopper.Play();
         }
 
         // Cannot afford even the smallest bet? Game over.
         if (!payoutManager.CanAfford(Mathf.Min(betAmounts)))
         {
             gameOverPanel.SetActive(true);
+            if (audioManager != null) audioManager.PlayGameOver();
         }
     }
 
@@ -120,7 +134,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private IEnumerator ShowWinMessage(int winAmount)
+    private IEnumerator ShowWinMessage()
     {
         winText.text = "WIN!";
         winBoard.SetActive(true);

@@ -25,6 +25,7 @@ public class Reel : MonoBehaviour
     public SymbolData CurrentSymbol { get; private set; }
 
     public bool IsSpinning { get; private set; }
+    public event System.Action OnReelStopped;
 
     private Image[] slotImages;
     private SymbolData[] slotSymbols;   // Which symbol each slot is showing
@@ -98,6 +99,7 @@ public class Reel : MonoBehaviour
 
         CurrentSymbol = target;
         IsSpinning = false;
+        OnReelStopped?.Invoke();
     }
 
     /// <summary>Move all slots down. Slots that fall off the bottom wrap to the top (hidden).</summary>

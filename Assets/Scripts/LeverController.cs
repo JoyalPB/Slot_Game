@@ -14,6 +14,7 @@ public class LeverController : MonoBehaviour
     [SerializeField] private Button leverButton;       // The Lever (button)
     [SerializeField] private Image leverUpImage;       // The Lever's Image (slot-machine2)
     [SerializeField] private GameObject leverPulled;   // LeverPulled (slot-machine3)
+    [SerializeField] private AudioManager audioManager;
 
     [Header("Feel")]
     [SerializeField] private float pulledTime = 0.5f;  // How long the lever stays down
@@ -55,6 +56,8 @@ public class LeverController : MonoBehaviour
         if (slotMachine.TrySpinWithCurrentBet())
         {
             ShowLeverDown();
+            if (audioManager != null) audioManager.PlayLever();
+
             yield return new WaitForSeconds(pulledTime);
             ShowLeverUp();
         }
@@ -62,7 +65,7 @@ public class LeverController : MonoBehaviour
         isPulling = false;
     }
 
-    // Hide the pole picture (but keep the object alive so the button and coroutine keep working)
+    // Hide the pole picture (keep the object alive so the button and coroutine keep working)
     private void ShowLeverDown()
     {
         leverUpImage.enabled = false;
