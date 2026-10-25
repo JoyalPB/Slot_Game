@@ -795,7 +795,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 417880079}
-  - component: {fileID: 417880080}
   m_Layer: 5
   m_Name: Reels
   m_TagString: Untagged
@@ -825,23 +824,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &417880080
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 417880078}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c572c29452ea06741888c4aaae98c53b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ReelTester
-  reels:
-  - {fileID: 3885142662368721278}
-  - {fileID: 611091104}
-  - {fileID: 366264941}
-  target: {fileID: 11400000, guid: 72c143d26f203e943b0d4e7fb63ec5e3, type: 2}
 --- !u!1 &422572833
 GameObject:
   m_ObjectHideFlags: 0
@@ -6720,7 +6702,7 @@ Transform:
   m_GameObject: {fileID: 921754722}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -960.00006, y: -540.2078, z: 0}
+  m_LocalPosition: {x: -1001, y: -540.2078, z: 0}
   m_LocalScale: {x: 1.8468643, y: 1.8468643, z: 1.8468643}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6790,7 +6772,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61a33b15e02231c4599faa10be38c0b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PayoutManager
-  startingCoins: 100
+  startingCoins: 300
 --- !u!4 &947866059
 Transform:
   m_ObjectHideFlags: 0
@@ -6885,7 +6867,7 @@ MonoBehaviour:
   spinLoopSource: {fileID: 947866065}
   ambienceSource: {fileID: 947866064}
   spinLoopClip: {fileID: 8300000, guid: 5c32873246c9fd044a8878b32f4a8fe5, type: 3}
-  winClip: {fileID: 8300000, guid: a26806eba984c264abc713c83a33ceb8, type: 3}
+  winClip: {fileID: 8300000, guid: 348059573275123408488eb71549b3a5, type: 3}
   gameOverClip: {fileID: 8300000, guid: 29483b15d6acd8e4387eec859c130a47, type: 3}
   ambienceClip: {fileID: 8300000, guid: 2cb6df2ee83d65a4db49916733c632a1, type: 3}
   buttonClickClip: {fileID: 8300000, guid: deb0f2392a60a7342b27aca2f9791d57, type: 3}

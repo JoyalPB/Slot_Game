@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SymbolData
   symbolName: Bell
   symbolSprite: {fileID: -2391669244243282240, guid: 0674ec3df2acf004f94e055c6fef5078, type: 3}
-  payoutMultiplier: 12
-  weight: 30
+  payoutMultiplier: 10
+  weight: 28
